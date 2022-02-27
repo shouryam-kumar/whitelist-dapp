@@ -17,7 +17,7 @@ export default function Home() {
   // Create a reference to the Web3 Modal (used for connecting to Metamask) which persists as long as the page is open
   const web3ModalRef = useRef();
 
-  /**
+  /*
    * Returns a Provider or Signer object representing the Ethereum RPC with or without the
    * signing capabilities of metamask attached
    *

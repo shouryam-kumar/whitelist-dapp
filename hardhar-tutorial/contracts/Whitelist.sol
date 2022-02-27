@@ -1,46 +1,38 @@
-//SPDX-License-Identifier: MIT
-
-
+//SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
+
 contract Whitelist {
-    //max no. of whitelist addresses allowed
+
+    // Max number of whitelisted addresses allowed
     uint8 public maxWhitelistedAddresses;
 
-
-    //Create a mapping of whitelist address
-    //if an address is whitelisted, we would set it to true otherwise it is set as false by default
-
+    // Create a mapping of whitelistedAddresses
+    // if an address is whitelisted, we would set it to true, it is false by default for all other addresses.
     mapping(address => bool) public whitelistedAddresses;
 
+    // numAddressesWhitelisted would be used to keep track of how many addresses have been whitelisted
+    uint8 public numAddressesWhitelisted;
 
-    //numAddressWhitelisted would be used to keep a track of how many address have been actually whitelisted
-    uint8 public numAddressWhitelisted;
-
-    //Setting the max no. of whitelisted address
-    //user will put the value at the time of deployment
-
-    constructor (uint8 _maxWhiteListedAddresses) {
-        maxWhitelistedAddresses =  _maxWhiteListedAddresses;
-
+    // Setting the Max number of whitelisted addresses
+    // User will put the value at the time of deployment
+    constructor(uint8 _maxWhitelistedAddresses) {
+        maxWhitelistedAddresses =  _maxWhitelistedAddresses;
     }
 
-    /*
-        addAddressToWhitelist --> This function will add users to the whitelist
-    */
-
+    /**
+        addAddressToWhitelist - This function adds the address of the sender to the
+        whitelist
+     */
     function addAddressToWhitelist() public {
-        //check if the user has already been whitelisted
+        // check if the user has already been whitelisted
         require(!whitelistedAddresses[msg.sender], "Sender has already been whitelisted");
-
-        //check if numAddresswhitelisted < maxWhitelistedAddress, if not throw an error
-        require(numAddressWhitelisted<maxWhitelistedAddresses, "Maximum limit reached!");
-
-        //add the address which called the function addAddressToWhitelist
+        // check if the numAddressesWhitelisted < maxWhitelistedAddresses, if not then throw an error.
+        require(numAddressesWhitelisted < maxWhitelistedAddresses, "More addresses cant be added, limit reached");
+        // Add the address which called the function to the whitelistedAddress array
         whitelistedAddresses[msg.sender] = true;
-
-        //Increase the number of whitlistedAddresses
-        numAddressWhitelisted += 1;
+        // Increase the number of whitelisted addresses
+        numAddressesWhitelisted += 1;
     }
 
 }
